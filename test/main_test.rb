@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 class MainTest < Minitest::Test
-  include Counter
+  include List
 
   def test_data_presence
     log = Log.new(File.readlines('webserver_test.log'))
@@ -34,4 +34,14 @@ class MainTest < Minitest::Test
     assert catalog.length == 2
   end
 
-end 
+  def test_total_views_list
+    log = Log.new(File.readlines('webserver_test.log'))
+    assert_includes total_views_list(log.data), "/help_page/1 views 4"
+  end
+
+  def test_unique_views_list
+    log = Log.new(File.readlines('webserver_test.log'))
+    assert_includes unique_views_list(log.data), "/help_page/1 unique views 3"
+  end
+
+end
